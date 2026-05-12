@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -19,6 +19,7 @@
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-native": "0.81.5",
+    "react-native-dotenv": "^3.4.11",
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0"
