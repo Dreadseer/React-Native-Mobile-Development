@@ -5,7 +5,6 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-  Modal,
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { getRestaurant, getRestaurantProducts } from '../../../services/api';
 import MenuItemRow from '../../../components/MenuItemRow';
+import OrderConfirmationModal from '../../../components/OrderConfirmationModal';
 
 type Product = {
   id: number;
@@ -45,20 +45,28 @@ export default function RestaurantMenuScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [token, setToken] = useState('');
+  const [customerId, setCustomerId] = useState<number>(0);
 
   useEffect(() => {
     async function fetchData() {
-      const token = await AsyncStorage.getItem('token');
+      const storedToken = await AsyncStorage.getItem('token');
 
-      if (!token) {
+      if (!storedToken) {
         router.replace('/');
         return;
       }
 
+      // Read customer id so it can be passed to the order modal
+      const customerRaw = await AsyncStorage.getItem('customer');
+      const customerObj = customerRaw ? JSON.parse(customerRaw) : null;
+      setToken(storedToken);
+      setCustomerId(customerObj?.id ?? 0);
+
       try {
         const [restaurantData, productsData] = await Promise.all([
-          getRestaurant(id, token),
-          getRestaurantProducts(id, token),
+          getRestaurant(id, storedToken),
+          getRestaurantProducts(id, storedToken),
         ]);
 
         setRestaurant(restaurantData);
@@ -146,21 +154,15 @@ export default function RestaurantMenuScreen() {
         ))}
       </ScrollView>
 
-      {/* TODO: replace with full OrderConfirmationModal in Feature 06 */}
-      <Modal visible={isModalVisible} transparent animationType="slide">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>Order Confirmation</Text>
-            <Text style={styles.modalPlaceholder}>Order modal coming in Feature 06.</Text>
-            <TouchableOpacity
-              style={styles.modalClose}
-              onPress={() => setIsModalVisible(false)}
-            >
-              <Text style={styles.modalCloseText}>CLOSE</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <OrderConfirmationModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        products={products}
+        quantities={quantities}
+        token={token}
+        customerId={customerId}
+        restaurantId={parseInt(id)}
+      />
     </View>
   );
 }
@@ -231,39 +233,5 @@ const styles = StyleSheet.create({
   },
   menuList: {
     paddingBottom: 20,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalBox: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 24,
-    width: '85%',
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#222126',
-    marginBottom: 12,
-  },
-  modalPlaceholder: {
-    color: '#888',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  modalClose: {
-    backgroundColor: '#DA583B',
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    borderRadius: 6,
-  },
-  modalCloseText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
   },
 });

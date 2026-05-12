@@ -150,6 +150,7 @@ isModalVisible: boolean
 - `MenuItemRow.tsx` is a pure presentational component — it receives props for the product, quantity, and `onIncrement`/`onDecrement` handlers
 - Do not persist quantities in AsyncStorage — they live in component state only
 - Token check: if null, `router.replace('/')` immediately
+- Base URL in `services/api.ts` uses `process.env.EXPO_PUBLIC_NGROK_URL` — never hardcoded
 
 ### Wireframe Layout Reference
 

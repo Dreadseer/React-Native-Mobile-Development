@@ -48,7 +48,7 @@ Replace the Login screen placeholder with a fully functional login page that aut
 - **R1 — Screen Layout:** Replace the Login placeholder in `app/index.tsx` with the full UI. White card centered on a white background, Rocket Food Delivery logo at the top, "Welcome Back / Login to begin" heading, email input, password input, LOG IN button. Must match the wireframe.
 - **R2 — Form State:** Use `useState` to track `email`, `password`, `errorMessage`, and `isLoading`. No external state management library.
 - **R3 — Input Validation:** Before sending the API request, check that both `email` and `password` are non-empty strings. If either is empty, set an error message and do not send the request.
-- **R4 — API Call:** Send a POST to `/api/customers/login` with body `{ email, password }` and `Content-Type: application/json`. Use the Fetch API. The base URL comes from the environment variable `API_BASE_URL` via `react-native-dotenv`.
+- **R4 — API Call:** Send a POST to `/api/customers/login` with body `{ email, password }` and `Content-Type: application/json`. Use the Fetch API. The base URL comes from `process.env.EXPO_PUBLIC_NGROK_URL` — defined once at the top of `services/api.ts` as `const BASE_URL = process.env.EXPO_PUBLIC_NGROK_URL`.
 - **R5 — Success Handling:** On a successful response (HTTP 200), extract the JWT token and customer object from the response. Store `token` and `customer` in AsyncStorage. Navigate to `/customer` using `router.replace('/customer')`.
 - **R6 — Error Handling:** On a failed response (any non-200 status) or a network error, display the message "Invalid email or password. Please try again." above the LOG IN button. The button must re-enable so the user can try again.
 - **R7 — Loading State:** While the request is in flight, disable the LOG IN button and change its label to "Logging in…" so the user knows something is happening.
@@ -104,7 +104,7 @@ Replace the Login screen placeholder with a fully functional login page that aut
 ## Tech Constraints (Feature-Level)
 
 - Use the Fetch API only — no Axios
-- Base URL must come from `API_BASE_URL` environment variable via `react-native-dotenv` — do not hardcode any URLs
+- Base URL must come from `process.env.EXPO_PUBLIC_NGROK_URL` — define `const BASE_URL = process.env.EXPO_PUBLIC_NGROK_URL` at the top of `services/api.ts` and use it in every fetch call. Never hardcode a URL
 - Use `router.replace('/customer')` on success — not `router.push` (prevents back-navigation to Login)
 - Password input must use `secureTextEntry={true}` to mask characters
 - Do not use any form library (no Formik, no React Hook Form)
@@ -156,6 +156,6 @@ Background: white (#FFFFFF)
 ## Notes for the AI
 
 - The exact shape of the login API response from Module 12 may vary. Write the success handler to read `response.token` for the token. Store the entire response object as the `'customer'` value in AsyncStorage using `JSON.stringify`. If the token lives at a different path (e.g. `response.data.token`), leave a `// TODO: adjust token path if needed` comment.
-- `react-native-dotenv` requires a Babel config entry to work. If `API_BASE_URL` is not resolving, check that `babel.config.js` includes the `react-native-dotenv` plugin pointing to the `.env` file.
+- `process.env.EXPO_PUBLIC_NGROK_URL` is available automatically in Expo SDK ~55 — no Babel plugin or extra library needed. Just make sure the variable is prefixed with `EXPO_PUBLIC_` in the `.env` file and restart Metro after any change to `.env`.
 - Keep the Login screen's styles clean and self-contained — define a `StyleSheet` at the bottom of the file.
 - Do not add any auto-login / token check logic here. If a returning user already has a token in AsyncStorage, that will be handled separately. This screen just handles the manual login flow.
