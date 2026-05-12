@@ -1,10 +1,7 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-
-// TODO: replace with logo image when asset is available
-// Place the logo file at: client/assets/images/logo.png
 
 export default function Header() {
   const insets = useSafeAreaInsets();
@@ -17,7 +14,7 @@ export default function Header() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <Image source={require('../assets/images/logo.png')} style={{ height: 40, resizeMode: 'contain' }} />
+      <Image source={require('../../Assets/images/logo.png')} style={{ height: 40, resizeMode: 'contain' }} />
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>LOG OUT</Text>
       </TouchableOpacity>
