@@ -131,6 +131,7 @@ Replace the Restaurant List placeholder with a fully functional screen that fetc
 - Do not use any third-party picker/dropdown library — use React Native's built-in `Picker` from `@react-native-picker/picker` or a custom `TouchableOpacity` dropdown if Picker is unavailable
 - Keep `RestaurantCard.tsx` as a pure presentational component — it receives props and renders UI only, no API calls or state inside it
 - Token check: if AsyncStorage returns null for `'token'`, call `router.replace('/')` immediately
+- Base URL in `services/api.ts` uses `process.env.EXPO_PUBLIC_NGROK_URL` — never hardcoded
 
 ### Wireframe Layout Reference
 

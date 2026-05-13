@@ -47,7 +47,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.screen}>
       <Image
-        source={require('../../Assets/images/logo.png')}
+        source={require('../assets/images/logo.png')}
         style={styles.logo}
         resizeMode="contain"
       />
