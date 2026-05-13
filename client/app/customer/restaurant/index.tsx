@@ -93,6 +93,7 @@ export default function RestaurantListScreen() {
       <View style={styles.filterRow}>
         {/* Rating dropdown */}
         <View style={styles.filterWrapper}>
+          <Text style={styles.filterLabel}>Rating</Text>
           <TouchableOpacity
             style={[styles.filterButton, selectedRating !== null && styles.filterActive]}
             onPress={() => { setRatingOpen(!ratingOpen); setPriceOpen(false); }}
@@ -125,6 +126,7 @@ export default function RestaurantListScreen() {
 
         {/* Price dropdown */}
         <View style={styles.filterWrapper}>
+          <Text style={styles.filterLabel}>Price</Text>
           <TouchableOpacity
             style={[styles.filterButton, selectedPrice !== null && styles.filterActive]}
             onPress={() => { setPriceOpen(!priceOpen); setRatingOpen(false); }}
@@ -180,12 +182,12 @@ export default function RestaurantListScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#222126',
+    backgroundColor: '#FFFFFF',
     padding: 12,
   },
   centered: {
     flex: 1,
-    backgroundColor: '#222126',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   sectionHeading: {
-    color: '#FFFFFF',
+    color: '#222126',
     fontWeight: 'bold',
     fontSize: 14,
     letterSpacing: 1,
@@ -212,8 +214,14 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 10,
   },
+  filterLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#222126',
+    marginBottom: 4,
+  },
   filterButton: {
-    backgroundColor: '#3a3840',
+    backgroundColor: '#F0F0F0',
     borderRadius: 6,
     paddingVertical: 10,
     paddingHorizontal: 12,
@@ -222,7 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DA583B',
   },
   filterButtonText: {
-    color: '#FFFFFF',
+    color: '#222126',
     fontSize: 13,
     textAlign: 'center',
   },
@@ -231,7 +239,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    top: 42,
+    top: 62,
     left: 0,
     right: 0,
     backgroundColor: '#FFFFFF',
@@ -257,7 +265,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   emptyText: {
-    color: '#AAAAAA',
+    color: '#888888',
     textAlign: 'center',
     marginTop: 40,
     fontSize: 14,
