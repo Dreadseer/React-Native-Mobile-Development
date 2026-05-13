@@ -53,9 +53,13 @@ export async function getRestaurant(id: string, token: string) {
 }
 
 // Fetches the menu items (products) for a restaurant.
-// Endpoint: GET /api/restaurants/:id/products
+// Endpoint: GET /api/products?restaurant={id}  (NOT /api/restaurants/:id/products)
+// Maps API field 'cost' → 'price' so components don't need to know the API name.
 export async function getRestaurantProducts(id: string, token: string) {
-  const response = await fetch(`${BASE_URL}/api/restaurants/${id}/products`, {
+  const url = `${BASE_URL}/api/products?restaurant=${id}`;
+  console.log('Fetching menu from:', url);
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -68,7 +72,10 @@ export async function getRestaurantProducts(id: string, token: string) {
   }
 
   const json = await response.json();
-  return json.data;
+  console.log('Menu API response:', JSON.stringify(json, null, 2));
+
+  // API returns 'cost' — map to 'price' to match component expectations
+  return json.data.map((p: any) => ({ ...p, price: p.cost }));
 }
 
 type OrderProduct = { product_id: number; quantity: number };
