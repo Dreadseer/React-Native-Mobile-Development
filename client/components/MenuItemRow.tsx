@@ -1,7 +1,5 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-
-// All menu items use the same static image regardless of what the API returns.
-const MENU_IMAGE = require('../assets/images/RestaurantMenu.jpg');
+import { getRestaurantImage } from '../constants/restaurantImages';
 
 type Product = {
   id: number;
@@ -24,7 +22,7 @@ export default function MenuItemRow({ product, quantity, onIncrement, onDecremen
 
   return (
     <View style={styles.row}>
-      <Image source={MENU_IMAGE} style={styles.image} />
+      <Image source={getRestaurantImage(product.id)} style={styles.image} />
 
       <View style={styles.details}>
         <Text style={styles.name}>{product.name}</Text>

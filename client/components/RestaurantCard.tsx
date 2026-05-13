@@ -1,6 +1,7 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, Image, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { getRestaurantImage } from '../constants/restaurantImages';
 
 type Restaurant = {
   id: number;
@@ -29,11 +30,7 @@ export default function RestaurantCard({ restaurant, onPress }: Props) {
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
-      {restaurant.image_url ? (
-        <Image source={{ uri: restaurant.image_url }} style={styles.image} />
-      ) : (
-        <View style={styles.imagePlaceholder} />
-      )}
+      <Image source={getRestaurantImage(restaurant.id)} style={styles.image} />
 
       <View style={styles.info}>
         <Text style={styles.name} numberOfLines={2}>{restaurant.name}</Text>
@@ -65,11 +62,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 110,
     resizeMode: 'cover',
-  },
-  imagePlaceholder: {
-    width: '100%',
-    height: 110,
-    backgroundColor: '#CCCCCC',
   },
   info: {
     padding: 8,
