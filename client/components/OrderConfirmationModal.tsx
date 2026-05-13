@@ -61,7 +61,7 @@ export default function OrderConfirmationModal({
       products: Object.entries(quantities)
         .filter(([, qty]) => qty > 0)
         .map(([productId, qty]) => ({
-          product_id: parseInt(productId),
+          id: parseInt(productId),
           quantity: qty,
         })),
     };

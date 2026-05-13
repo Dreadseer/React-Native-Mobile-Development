@@ -30,9 +30,10 @@ export default function LoginScreen() {
     try {
       const data = await loginCustomer(email, password);
 
-      // API returns { success, accessToken, user_id }
+      // API returns { success, accessToken, user_id, customer_id }
+      // customer_id (e.g. 24) is the orders table FK — not user_id (e.g. 49)
       const token = data.accessToken;
-      const customer = { id: data.user_id, email };
+      const customer = { id: data.customer_id, email };
 
       await AsyncStorage.setItem('token', token);
       await AsyncStorage.setItem('customer', JSON.stringify(customer));
