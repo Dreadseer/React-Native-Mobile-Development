@@ -5,9 +5,9 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-  Modal,
   StyleSheet,
 } from 'react-native';
+import OrderHistoryModal from '../../../components/OrderHistoryModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -121,33 +121,14 @@ export default function OrderHistoryScreen() {
         </ScrollView>
       )}
 
-      {/* Modal placeholder — Feature 08 will replace this with full UI */}
-      <Modal
+      <OrderHistoryModal
         visible={isModalVisible}
-        transparent
-        animationType="slide"
-        onRequestClose={() => {
+        onClose={() => {
           setIsModalVisible(false);
           setSelectedOrder(null);
         }}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>
-              {selectedOrder?.restaurant_name ?? ''}
-            </Text>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => {
-                setIsModalVisible(false);
-                setSelectedOrder(null);
-              }}
-            >
-              <Text style={styles.closeButtonText}>CLOSE</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        order={selectedOrder}
+      />
     </View>
   );
 }
@@ -231,35 +212,5 @@ const styles = StyleSheet.create({
   rowCellView: {
     width: 50,
     alignItems: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalBox: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 24,
-    width: '80%',
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#222126',
-    marginBottom: 20,
-  },
-  closeButton: {
-    backgroundColor: '#DA583B',
-    paddingHorizontal: 24,
-    paddingVertical: 10,
-    borderRadius: 6,
-  },
-  closeButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 13,
   },
 });
