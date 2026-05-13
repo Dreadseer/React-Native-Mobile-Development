@@ -78,13 +78,30 @@ export async function getRestaurantProducts(id: string, token: string) {
   return json.data.map((p: any) => ({ ...p, price: p.cost }));
 }
 
-type OrderProduct = { product_id: number; quantity: number };
+type OrderProduct = { id: number; quantity: number };
 
 type OrderPayload = {
   customer_id: number;
   restaurant_id: number;
   products: OrderProduct[];
 };
+
+export async function getCustomerOrders(customerId: number, token: string) {
+  const response = await fetch(`${BASE_URL}/api/orders?type=customer&id=${customerId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch orders');
+  }
+
+  const json = await response.json();
+  return json.data;
+}
 
 export async function createOrder(payload: OrderPayload, token: string) {
   const response = await fetch(`${BASE_URL}/api/orders`, {
