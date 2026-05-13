@@ -170,12 +170,12 @@ export default function RestaurantMenuScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#222126',
+    backgroundColor: '#FFFFFF',
     padding: 12,
   },
   centered: {
     flex: 1,
-    backgroundColor: '#222126',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   screenHeading: {
-    color: '#FFFFFF',
+    color: '#222126',
     fontWeight: 'bold',
     fontSize: 14,
     letterSpacing: 1,
@@ -202,13 +202,13 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   restaurantName: {
-    color: '#FFFFFF',
+    color: '#222126',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 4,
   },
   restaurantPrice: {
-    color: '#F0CB67',
+    color: '#851919',
     fontSize: 14,
     marginBottom: 4,
   },
