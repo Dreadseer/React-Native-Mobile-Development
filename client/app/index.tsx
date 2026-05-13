@@ -30,11 +30,12 @@ export default function LoginScreen() {
     try {
       const data = await loginCustomer(email, password);
 
-      // TODO: adjust token path if needed (e.g. data.data.token)
-      const token = data.token;
+      // API returns { success, accessToken, user_id }
+      const token = data.accessToken;
+      const customer = { id: data.user_id, email };
 
       await AsyncStorage.setItem('token', token);
-      await AsyncStorage.setItem('customer', JSON.stringify(data));
+      await AsyncStorage.setItem('customer', JSON.stringify(customer));
 
       router.replace('/customer');
     } catch {
@@ -47,7 +48,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.screen}>
       <Image
-        source={require('../../Assets/images/logo.png')}
+        source={require('../assets/images/logo.png')}
         style={styles.logo}
         resizeMode="contain"
       />

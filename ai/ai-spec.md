@@ -156,7 +156,8 @@ Root Stack (app/_layout.tsx)
 - `react-native-reanimated` (required dependency)
 
 ### Environment
-- `react-native-dotenv` — manage environment variables (e.g., `API_BASE_URL`)
+- Expo's built-in `EXPO_PUBLIC_` environment variable convention — no extra library or Babel plugin needed
+- Variables prefixed with `EXPO_PUBLIC_` in `.env` are automatically available via `process.env.EXPO_PUBLIC_*` anywhere in the app
 
 ---
 
@@ -253,6 +254,7 @@ Store these in `constants/colors.ts` and import from there — never hardcode he
 12. **All menus use `RestaurantMenu.jpg`** as the menu image — no per-restaurant images.
 13. **Explain changes briefly** with a comment if a non-obvious decision is made.
 14. **Do not modify the Spring Boot back-end.** This module is front-end only.
+15. **All API base URLs must use `process.env.EXPO_PUBLIC_NGROK_URL`** — never hardcode a URL or IP address anywhere in the codebase. In `services/api.ts`, define `const BASE_URL = process.env.EXPO_PUBLIC_NGROK_URL;` at the top of the file and use it in every fetch call.
 
 ---
 
@@ -266,14 +268,18 @@ npx expo install expo-router react-native-reanimated react-native-screens react-
 npx expo install @react-native-async-storage/async-storage
 npm install react-bootstrap bootstrap
 npm install @fortawesome/react-native-fontawesome @fortawesome/free-solid-svg-icons
-npm install react-native-dotenv
 npx expo install @expo/ngrok
 ```
 
 ### Environment Variables (`.env`)
 ```
-API_BASE_URL=https://your-ngrok-url.ngrok.io
+EXPO_PUBLIC_NGROK_URL=https://your-ngrok-url.ngrok.io
 ```
+
+> The `EXPO_PUBLIC_` prefix is required — Expo only exposes variables with this prefix to the client bundle.
+> Access it anywhere in the app via `process.env.EXPO_PUBLIC_NGROK_URL`.
+> No Babel plugin or extra library needed — this works out of the box with Expo SDK ~55.
+> Every time your Ngrok URL changes, update this value and restart the Metro bundler.
 
 ### Start the App
 ```bash
@@ -283,8 +289,9 @@ npx expo start
 ### Test on Physical Device
 1. Start the Spring Boot API locally (from Module 12).
 2. Run `ngrok http 8080` to expose it publicly.
-3. Update `API_BASE_URL` in `.env` to the Ngrok HTTPS URL.
-4. Scan the Expo QR code with Expo Go on your device.
+3. Update `EXPO_PUBLIC_NGROK_URL` in `.env` to the new Ngrok HTTPS URL.
+4. Restart the Metro bundler (`npx expo start`) so the new env value is picked up.
+5. Scan the Expo QR code with Expo Go on your device.
 
 ### Test API Endpoints
 - Open `PostmanCollection.json` in Postman.

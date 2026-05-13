@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 // All menu items use the same static image regardless of what the API returns.
-const MENU_IMAGE = require('../../Assets/images/RestaurantMenu.jpg');
+const MENU_IMAGE = require('../assets/images/RestaurantMenu.jpg');
 
 type Product = {
   id: number;
