@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <Image source={require('../assets/images/logo.png')} style={{ height: 40, resizeMode: 'contain' }} />
+      <Image source={require('../assets/images/logo.png')} style={{ width: 150, height: 40, resizeMode: 'contain' }} />
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>LOG OUT</Text>
       </TouchableOpacity>
@@ -24,7 +24,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#222126',
+    backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -12,9 +12,9 @@ export default function CustomerLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarStyle: { backgroundColor: '#222126' },
+          tabBarStyle: { backgroundColor: '#FFFFFF' },
           tabBarActiveTintColor: '#DA583B',
-          tabBarInactiveTintColor: '#FFFFFF',
+          tabBarInactiveTintColor: '#222126',
         }}
       >
         <Tabs.Screen
