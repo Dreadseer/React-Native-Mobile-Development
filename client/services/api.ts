@@ -1,7 +1,7 @@
 const BASE_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
 export async function loginCustomer(email: string, password: string) {
-  const response = await fetch(`${BASE_URL}/api/customers/login`, {
+  const response = await fetch(`${BASE_URL}/api/auth`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -13,6 +13,8 @@ export async function loginCustomer(email: string, password: string) {
 
   return response.json();
 }
+
+// All endpoints return { message, data } — unwrap .data before returning.
 
 export async function getRestaurants(token: string) {
   const response = await fetch(`${BASE_URL}/api/restaurants`, {
@@ -27,11 +29,12 @@ export async function getRestaurants(token: string) {
     throw new Error('Failed to fetch restaurants');
   }
 
-  return response.json();
+  const json = await response.json();
+  return json.data;
 }
 
 // Fetches the details (name, price_range, rating) for a single restaurant.
-// Restaurant info is NOT embedded in the products response in Module 12 — it requires a separate call.
+// Restaurant info is NOT embedded in the products response — it requires a separate call.
 export async function getRestaurant(id: string, token: string) {
   const response = await fetch(`${BASE_URL}/api/restaurants/${id}`, {
     method: 'GET',
@@ -45,7 +48,8 @@ export async function getRestaurant(id: string, token: string) {
     throw new Error('Failed to fetch restaurant');
   }
 
-  return response.json();
+  const json = await response.json();
+  return json.data;
 }
 
 // Fetches the menu items (products) for a restaurant.
@@ -63,7 +67,8 @@ export async function getRestaurantProducts(id: string, token: string) {
     throw new Error('Failed to fetch menu items');
   }
 
-  return response.json();
+  const json = await response.json();
+  return json.data;
 }
 
 type OrderProduct = { product_id: number; quantity: number };
