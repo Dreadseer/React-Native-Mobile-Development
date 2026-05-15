@@ -1,0 +1,747 @@
+{
+  "info": {
+    "name": "RocketFood API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/auth", "host": ["{{base_url}}"], "path": ["api", "auth"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Restaurants",
+      "item": [
+        {
+          "name": "Get All Restaurants",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                { "key": "rating", "value": "", "disabled": true },
+                { "key": "price_range", "value": "", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Restaurant by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/restaurants/1", "host": ["{{base_url}}"], "path": ["api", "restaurants", "1"] }
+          }
+        },
+        {
+          "name": "Create Restaurant",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/restaurants", "host": ["{{base_url}}"], "path": ["api", "restaurants"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"price_range\": 1,\n  \"rating\": 3\n}" }
+          }
+        },
+        {
+          "name": "Update Restaurant",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/restaurants/1", "host": ["{{base_url}}"], "path": ["api", "restaurants", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"price_range\": 1,\n  \"rating\": 3\n}" }
+          }
+        },
+        {
+          "name": "Delete Restaurant",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/restaurants/1", "host": ["{{base_url}}"], "path": ["api", "restaurants", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/products",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products"],
+              "query": [{ "key": "restaurant", "value": "", "disabled": true }]
+            }
+          }
+        },
+        {
+          "name": "Get Products by Restaurant",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/products?restaurant=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products"],
+              "query": [{ "key": "restaurant", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/products/1", "host": ["{{base_url}}"], "path": ["api", "products", "1"] }
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/products", "host": ["{{base_url}}"], "path": ["api", "products"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"cost\": 0,\n  \"restaurant_id\": 1\n}" }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/products/1", "host": ["{{base_url}}"], "path": ["api", "products", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"cost\": 0,\n  \"restaurant_id\": 1\n}" }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/products/1", "host": ["{{base_url}}"], "path": ["api", "products", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Get Pending Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/orders/pending", "host": ["{{base_url}}"], "path": ["api", "orders", "pending"] }
+          }
+        },
+        {
+          "name": "Get Orders by Customer",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/orders?type=customer&id=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"],
+              "query": [
+                { "key": "type", "value": "customer" },
+                { "key": "id", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Orders by Courier",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/orders?type=courier&id=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"],
+              "query": [
+                { "key": "type", "value": "courier" },
+                { "key": "id", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Orders by Restaurant",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/orders?type=restaurant&id=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"],
+              "query": [
+                { "key": "type", "value": "restaurant" },
+                { "key": "id", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api", "orders"] },
+            "body": { "mode": "raw", "raw": "{\n  \"customer_id\": 1,\n  \"restaurant_id\": 1,\n  \"products\": [\n    { \"id\": 1, \"quantity\": 1 }\n  ]\n}" }
+          }
+        },
+        {
+          "name": "Update Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/orders/1", "host": ["{{base_url}}"], "path": ["api", "orders", "1"] },
+            "body": { "mode": "raw", "raw": "{}" }
+          }
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/orders/1", "host": ["{{base_url}}"], "path": ["api", "orders", "1"] }
+          }
+        },
+        {
+          "name": "Assign Courier to Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/order/1/courier", "host": ["{{base_url}}"], "path": ["api", "order", "1", "courier"] },
+            "body": { "mode": "raw", "raw": "{\n  \"courier_id\": 1\n}" }
+          }
+        },
+        {
+          "name": "Update Order Rating",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/order/1/rating", "host": ["{{base_url}}"], "path": ["api", "order", "1", "rating"] },
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5\n}" }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/order/1/status", "host": ["{{base_url}}"], "path": ["api", "order", "1", "status"] },
+            "body": { "mode": "raw", "raw": "{\n  \"order_status_id\": 1\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order Statuses",
+      "item": [
+        {
+          "name": "Get All Order Statuses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/order-statuses", "host": ["{{base_url}}"], "path": ["api", "order-statuses"] }
+          }
+        },
+        {
+          "name": "Get Order Status by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/order-statuses/1", "host": ["{{base_url}}"], "path": ["api", "order-statuses", "1"] }
+          }
+        },
+        {
+          "name": "Create Order Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/order-statuses", "host": ["{{base_url}}"], "path": ["api", "order-statuses"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/order-statuses/1", "host": ["{{base_url}}"], "path": ["api", "order-statuses", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Delete Order Status",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/order-statuses/1", "host": ["{{base_url}}"], "path": ["api", "order-statuses", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/customers", "host": ["{{base_url}}"], "path": ["api", "customers"] }
+          }
+        },
+        {
+          "name": "Get Customer by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/customers/1", "host": ["{{base_url}}"], "path": ["api", "customers", "1"] }
+          }
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/customers", "host": ["{{base_url}}"], "path": ["api", "customers"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"address_id\": 1\n}" }
+          }
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/customers/1", "host": ["{{base_url}}"], "path": ["api", "customers", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"address_id\": 1\n}" }
+          }
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/customers/1", "host": ["{{base_url}}"], "path": ["api", "customers", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Couriers",
+      "item": [
+        {
+          "name": "Get All Couriers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/couriers", "host": ["{{base_url}}"], "path": ["api", "couriers"] }
+          }
+        },
+        {
+          "name": "Get Courier by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/couriers/1", "host": ["{{base_url}}"], "path": ["api", "couriers", "1"] }
+          }
+        },
+        {
+          "name": "Create Courier",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/couriers", "host": ["{{base_url}}"], "path": ["api", "couriers"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"password\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Update Courier",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/couriers/1", "host": ["{{base_url}}"], "path": ["api", "couriers", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Delete Courier",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/couriers/1", "host": ["{{base_url}}"], "path": ["api", "couriers", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courier Statuses",
+      "item": [
+        {
+          "name": "Get All Courier Statuses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/courier-statuses", "host": ["{{base_url}}"], "path": ["api", "courier-statuses"] }
+          }
+        },
+        {
+          "name": "Get Courier Status by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/courier-statuses/1", "host": ["{{base_url}}"], "path": ["api", "courier-statuses", "1"] }
+          }
+        },
+        {
+          "name": "Create Courier Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/courier-statuses", "host": ["{{base_url}}"], "path": ["api", "courier-statuses"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Update Courier Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/courier-statuses/1", "host": ["{{base_url}}"], "path": ["api", "courier-statuses", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Delete Courier Status",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/courier-statuses/1", "host": ["{{base_url}}"], "path": ["api", "courier-statuses", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/users", "host": ["{{base_url}}"], "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/users/1", "host": ["{{base_url}}"], "path": ["api", "users", "1"] }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/users", "host": ["{{base_url}}"], "path": ["api", "users"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"password\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/users/1", "host": ["{{base_url}}"], "path": ["api", "users", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/users/1", "host": ["{{base_url}}"], "path": ["api", "users", "1"] }
+          }
+        },
+        {
+          "name": "Get Account",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/account/1", "host": ["{{base_url}}"], "path": ["api", "account", "1"] }
+          }
+        },
+        {
+          "name": "Update Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/account/1?type=customer",
+              "host": ["{{base_url}}"],
+              "path": ["api", "account", "1"],
+              "query": [{ "key": "type", "value": "customer" }]
+            },
+            "body": { "mode": "raw", "raw": "{}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Get All Addresses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/addresses", "host": ["{{base_url}}"], "path": ["api", "addresses"] }
+          }
+        },
+        {
+          "name": "Get Address by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/addresses/1", "host": ["{{base_url}}"], "path": ["api", "addresses", "1"] }
+          }
+        },
+        {
+          "name": "Create Address",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/addresses", "host": ["{{base_url}}"], "path": ["api", "addresses"] },
+            "body": { "mode": "raw", "raw": "{\n  \"street_address\": \"\",\n  \"city\": \"\",\n  \"postal_code\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Update Address",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/addresses/1", "host": ["{{base_url}}"], "path": ["api", "addresses", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"street_address\": \"\",\n  \"city\": \"\",\n  \"postal_code\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Delete Address",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/addresses/1", "host": ["{{base_url}}"], "path": ["api", "addresses", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Get All Employees",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/employees", "host": ["{{base_url}}"], "path": ["api", "employees"] }
+          }
+        },
+        {
+          "name": "Get Employee by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/employees/1", "host": ["{{base_url}}"], "path": ["api", "employees", "1"] }
+          }
+        },
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/employees", "host": ["{{base_url}}"], "path": ["api", "employees"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"password\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/employees/1", "host": ["{{base_url}}"], "path": ["api", "employees", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"email\": \"\"\n}" }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/employees/1", "host": ["{{base_url}}"], "path": ["api", "employees", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Orders",
+      "item": [
+        {
+          "name": "Get All Product Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/product-orders", "host": ["{{base_url}}"], "path": ["api", "product-orders"] }
+          }
+        },
+        {
+          "name": "Get Product Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/product-orders/1", "host": ["{{base_url}}"], "path": ["api", "product-orders", "1"] }
+          }
+        },
+        {
+          "name": "Create Product Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/product-orders", "host": ["{{base_url}}"], "path": ["api", "product-orders"] },
+            "body": { "mode": "raw", "raw": "{\n  \"order_id\": 1,\n  \"product_id\": 1,\n  \"quantity\": 1\n}" }
+          }
+        },
+        {
+          "name": "Update Product Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/product-orders/1", "host": ["{{base_url}}"], "path": ["api", "product-orders", "1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"quantity\": 1\n}" }
+          }
+        },
+        {
+          "name": "Delete Product Order",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/product-orders/1", "host": ["{{base_url}}"], "path": ["api", "product-orders", "1"] }
+          }
+        }
+      ]
+    }
+  ]
+}
