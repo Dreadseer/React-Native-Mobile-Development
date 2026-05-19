@@ -11,7 +11,9 @@ export async function loginCustomer(email: string, password: string) {
     throw new Error('Login failed');
   }
 
-  return response.json();
+  const data = await response.json();
+  console.log('=== AUTH RESPONSE ===', JSON.stringify(data, null, 2));
+  return data;
 }
 
 // All endpoints return { message, data } — unwrap .data before returning.
