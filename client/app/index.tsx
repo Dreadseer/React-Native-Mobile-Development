@@ -30,15 +30,27 @@ export default function LoginScreen() {
     try {
       const data = await loginCustomer(email, password);
 
-      // API returns { success, accessToken, user_id, customer_id }
-      // customer_id (e.g. 24) is the orders table FK — not user_id (e.g. 49)
-      const token = data.accessToken;
-      const customer = { id: data.customer_id, email };
+      // AUTH RESPONSE shape (confirmed from console log):
+      // { accessToken, success, user_id, customer_id, courier_id }
+      // Flat structure — no nested user/customer/courier objects.
+      // customer_id or courier_id being null means the user lacks that role.
+      const hasCustomer = data.customer_id != null;
+      const hasCourier = data.courier_id != null;
 
-      await AsyncStorage.setItem('token', token);
-      await AsyncStorage.setItem('customer', JSON.stringify(customer));
+      await AsyncStorage.setItem('token', data.accessToken);
+      await AsyncStorage.setItem('user', JSON.stringify({ id: data.user_id, email }));
+      await AsyncStorage.setItem('customer', JSON.stringify(hasCustomer ? { id: data.customer_id } : null));
+      await AsyncStorage.setItem('courier', JSON.stringify(hasCourier ? { id: data.courier_id } : null));
 
-      router.replace('/customer');
+      if (hasCustomer && hasCourier) {
+        router.replace('/selection');
+      } else if (hasCustomer) {
+        await AsyncStorage.setItem('role', 'customer');
+        router.replace('/customer');
+      } else if (hasCourier) {
+        await AsyncStorage.setItem('role', 'courier');
+        router.replace('/courier');
+      }
     } catch {
       setErrorMessage('Invalid email or password. Please try again.');
     } finally {

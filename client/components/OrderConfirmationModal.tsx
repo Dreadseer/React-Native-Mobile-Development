@@ -82,17 +82,13 @@ export default function OrderConfirmationModal({
           {/* Header */}
           <View style={styles.header}>
             <Text style={styles.headerTitle}>Order Confirmation</Text>
-            {orderStatus !== 'success' && (
-              <TouchableOpacity
-                onPress={handleClose}
-                disabled={orderStatus === 'processing'}
-              >
-                <Text style={[
-                  styles.closeButton,
-                  orderStatus === 'processing' && styles.closeButtonDisabled,
-                ]}>×</Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              onPress={handleClose}
+              disabled={orderStatus === 'processing'}
+              style={{ opacity: orderStatus === 'processing' ? 0.4 : 1 }}
+            >
+              <Text style={styles.closeButton}>×</Text>
+            </TouchableOpacity>
           </View>
 
           {/* Order summary — always visible */}
