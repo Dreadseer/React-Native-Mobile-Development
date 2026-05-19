@@ -121,3 +121,74 @@ export async function createOrder(payload: OrderPayload, token: string) {
 
   return response.json();
 }
+
+export async function getOrderStatuses(token: string) {
+  const response = await fetch(`${BASE_URL}/api/order-statuses`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch order statuses');
+  }
+
+  const json = await response.json();
+  return json.data;
+}
+
+export async function getPendingOrders(token: string) {
+  const response = await fetch(`${BASE_URL}/api/orders/pending`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch pending orders');
+  }
+
+  const json = await response.json();
+  return json.data;
+}
+
+export async function getCourierOrders(courierId: number, token: string) {
+  const response = await fetch(`${BASE_URL}/api/orders?type=courier&id=${courierId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch courier orders');
+  }
+
+  const json = await response.json();
+  return json.data;
+}
+
+export async function updateOrderStatus(orderId: number, statusName: string, token: string) {
+  const response = await fetch(`${BASE_URL}/api/order/${orderId}/status`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status: statusName }),
+  });
+
+  const text = await response.text();
+  console.log('=== UPDATE STATUS RESPONSE ===', response.status, text);
+
+  if (!response.ok) {
+    throw new Error('Failed to update order status');
+  }
+
+  return text ? JSON.parse(text) : null;
+}
