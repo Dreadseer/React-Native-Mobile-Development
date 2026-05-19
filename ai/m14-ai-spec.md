@@ -126,24 +126,45 @@ if hasCourier only            → router.replace('/courier')
 
 ### Important API Notes
 
-- **Login endpoint changed from Module 13:** Module 13 used `/api/customers/login` — Module 14 uses `/api/auth`. Update `services/api.ts` accordingly.
-- **Order status IDs are numbers** — fetch `/api/order-statuses` on app start or courier screen mount to get the ID-to-name mapping. Do not hardcode IDs.
+- **Login endpoint is `/api/auth`** — returns a flat object with `accessToken`, `user_id`, `customer_id`, `courier_id`. No nested customer or courier objects.
+- **Token field is `accessToken`** — not `token`. Always read `data.accessToken` from the login response.
+- **Role detection uses null check** — `data.customer_id != null` and `data.courier_id != null`. Do not use `!!data.customer`.
+- **Order status IDs are numbers** — fetch `/api/order-statuses` on courier screen mount. Do not hardcode IDs.
 - **Status update uses POST** not PUT/PATCH — `POST /api/order/{id}/status` with `{ "order_status_id": number }`
-- **Account GET** has no `?type` query param — just `GET /api/account/{id}`
-- **Account PUT** has `?type=customer` or `?type=courier` as a query param
+- **Account GET** — `GET /api/account/{id}` with no `?type` query param
+- **Account PUT** — `PUT /api/account/{id}?type=customer` or `?type=courier`
+- **Logo file** — selection screen uses `assets/images/logo2.png`, header uses `assets/images/logo.png`
 
 ---
 
 ## Data and Models
 
-### Stored in AsyncStorage (updated)
+### Stored in AsyncStorage (confirmed from /api/auth response)
 
 ```
-'token'       → JWT string
-'user'        → { id, email } — the user record
-'customer'    → { id, email, phone, ... } | null — null if no customer account
-'courier'     → { id, email, phone, ... } | null — null if no courier account
-'role'        → 'customer' | 'courier' — which role is active this session
+'token'       → data.accessToken (JWT string — note: field is accessToken not token)
+'user'        → JSON.stringify({ id: data.user_id, email }) — no user object in response, built manually
+'customer'    → JSON.stringify({ id: data.customer_id }) | JSON.stringify(null) if customer_id is null
+'courier'     → JSON.stringify({ id: data.courier_id }) | JSON.stringify(null) if courier_id is null
+'role'        → 'customer' | 'courier' — written at routing time, not at login
+```
+
+### Confirmed /api/auth Response Shape
+
+```json
+{
+  "accessToken": "eyJhbGci...",
+  "success": true,
+  "user_id": 1,
+  "customer_id": 1,
+  "courier_id": 23
+}
+```
+
+**Role detection:**
+```ts
+const hasCustomer = data.customer_id != null;
+const hasCourier = data.courier_id != null;
 ```
 
 ### Order Status Mapping (fetched from API)

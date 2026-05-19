@@ -1,11 +1,15 @@
 // Courier Tab Navigator — mirrors the customer tab bar structure with courier-specific routes.
+import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTruck, faUser } from '@fortawesome/free-solid-svg-icons';
+import Header from '../../components/Header';
 
 export default function CourierLayout() {
   return (
-    <Tabs
+    <View style={{ flex: 1 }}>
+      <Header />
+      <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: { backgroundColor: '#222126' },
@@ -32,5 +36,6 @@ export default function CourierLayout() {
         }}
       />
     </Tabs>
+    </View>
   );
 }
