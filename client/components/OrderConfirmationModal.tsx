@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircleXmark, faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { createOrder } from '../services/api';
 
 type Product = {
@@ -38,6 +38,8 @@ export default function OrderConfirmationModal({
   restaurantId,
 }: Props) {
   const [orderStatus, setOrderStatus] = useState<OrderStatus>('idle');
+  const [sendEmail, setSendEmail] = useState(false);
+  const [sendSMS, setSendSMS] = useState(false);
 
   // Only items the user actually ordered
   const orderedItems = products.filter((p) => (quantities[p.id] ?? 0) > 0);
@@ -49,6 +51,8 @@ export default function OrderConfirmationModal({
   const handleClose = () => {
     if (orderStatus === 'processing') return;
     setOrderStatus('idle');
+    setSendEmail(false);
+    setSendSMS(false);
     onClose();
   };
 
@@ -61,9 +65,11 @@ export default function OrderConfirmationModal({
       products: Object.entries(quantities)
         .filter(([, qty]) => qty > 0)
         .map(([productId, qty]) => ({
-          id: parseInt(productId),
+          product_id: parseInt(productId),
           quantity: qty,
         })),
+      sendSMS,
+      sendEmail,
     };
 
     try {
@@ -111,6 +117,40 @@ export default function OrderConfirmationModal({
               <Text style={styles.totalLabel}>TOTAL:</Text>
               <Text style={styles.totalAmount}>$ {orderTotal.toFixed(2)}</Text>
             </View>
+
+            {/* Notification opt-in — idle state only */}
+            {orderStatus === 'idle' && (
+              <View style={styles.notificationSection}>
+                <Text style={styles.notificationText}>
+                  Would you like to receive your order confirmation by email and/or text?
+                </Text>
+                <View style={styles.checkboxRow}>
+                  <TouchableOpacity
+                    style={styles.checkbox}
+                    onPress={() => setSendEmail(prev => !prev)}
+                  >
+                    <FontAwesomeIcon
+                      icon={sendEmail ? faSquareCheck : faSquare}
+                      size={20}
+                      color={sendEmail ? '#DA583B' : '#222126'}
+                    />
+                    <Text style={styles.checkboxLabel}>By Email</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.checkbox}
+                    onPress={() => setSendSMS(prev => !prev)}
+                  >
+                    <FontAwesomeIcon
+                      icon={sendSMS ? faSquareCheck : faSquare}
+                      size={20}
+                      color={sendSMS ? '#DA583B' : '#222126'}
+                    />
+                    <Text style={styles.checkboxLabel}>By Phone</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
 
             {/* State-based UI */}
             {orderStatus === 'success' && (
@@ -273,5 +313,28 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 14,
+  },
+  notificationSection: {
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  notificationText: {
+    fontSize: 13,
+    color: '#222126',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  checkboxRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  checkbox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  checkboxLabel: {
+    fontSize: 14,
+    color: '#222126',
   },
 });
