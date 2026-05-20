@@ -27,7 +27,7 @@ export default function CourierLayout() {
         }}
       />
       <Tabs.Screen
-        name="account"
+        name="account/index"
         options={{
           title: 'Account',
           tabBarIcon: ({ color }) => (
