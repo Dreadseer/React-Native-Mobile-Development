@@ -184,11 +184,51 @@ export async function updateOrderStatus(orderId: number, statusName: string, tok
   });
 
   const text = await response.text();
-  console.log('=== UPDATE STATUS RESPONSE ===', response.status, text);
 
   if (!response.ok) {
     throw new Error('Failed to update order status');
   }
 
   return text ? JSON.parse(text) : null;
+}
+
+export async function getAccountDetails(userId: number, token: string) {
+  const response = await fetch(`${BASE_URL}/api/account/${userId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch account details');
+  }
+
+  const json = await response.json();
+  console.log('=== ACCOUNT RESPONSE ===', JSON.stringify(json, null, 2));
+  return json.data;
+}
+
+export async function updateAccountDetails(
+  userId: number,
+  type: string,
+  email: string,
+  phone: string,
+  token: string
+) {
+  const response = await fetch(`${BASE_URL}/api/account/${userId}?type=${type}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ email, phone }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update account details');
+  }
+
+  return response.json();
 }
