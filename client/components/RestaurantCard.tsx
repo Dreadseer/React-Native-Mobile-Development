@@ -2,6 +2,7 @@ import { Text, Image, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { getRestaurantImage } from '../constants/restaurantImages';
+import { Fonts } from '../constants/fonts';
 
 type Restaurant = {
   id: number;
@@ -71,11 +72,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222126',
     marginBottom: 4,
+    fontFamily: Fonts.body,
   },
   price: {
     fontSize: 13,
     color: '#851919',
     marginBottom: 4,
+    fontFamily: Fonts.body,
   },
   stars: {
     flexDirection: 'row',

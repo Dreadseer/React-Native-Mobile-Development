@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import OrderHistoryModal from '../../../components/OrderHistoryModal';
+import { Fonts } from '../../../constants/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -102,7 +103,7 @@ export default function OrderHistoryScreen() {
           <Text style={styles.emptyText}>No orders yet.</Text>
         </View>
       ) : (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
           {orders.map((order, index) => (
             <View
               key={order.id}
@@ -151,16 +152,19 @@ const styles = StyleSheet.create({
     color: '#222126',
     letterSpacing: 1,
     marginBottom: 12,
+    fontFamily: Fonts.heading,
   },
   errorText: {
     color: '#DA583B',
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   emptyText: {
     color: '#888',
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   tableHeader: {
     flexDirection: 'row',
@@ -173,12 +177,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 13,
+    fontFamily: Fonts.subheading,
   },
   headerCellStatus: {
     flex: 1,
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 13,
+    fontFamily: Fonts.subheading,
   },
   headerCellView: {
     width: 50,
@@ -186,6 +192,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 13,
     textAlign: 'center',
+    fontFamily: Fonts.subheading,
   },
   tableRow: {
     flexDirection: 'row',
@@ -203,11 +210,13 @@ const styles = StyleSheet.create({
     flex: 2,
     fontSize: 13,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   rowCellStatus: {
     flex: 1,
     fontSize: 13,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   rowCellView: {
     width: 50,

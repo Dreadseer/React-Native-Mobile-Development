@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { getRestaurants } from '../../../services/api';
 import RestaurantCard from '../../../components/RestaurantCard';
+import { Fonts } from '../../../constants/fonts';
 
 type Restaurant = {
   id: number;
@@ -195,6 +196,7 @@ const styles = StyleSheet.create({
     color: '#DA583B',
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   sectionHeading: {
     color: '#222126',
@@ -203,6 +205,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: 10,
     marginTop: 6,
+    fontFamily: Fonts.heading,
   },
   filterRow: {
     flexDirection: 'row',
@@ -219,6 +222,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222126',
     marginBottom: 4,
+    fontFamily: Fonts.body,
   },
   filterButton: {
     backgroundColor: '#F0F0F0',
@@ -233,6 +237,7 @@ const styles = StyleSheet.create({
     color: '#222126',
     fontSize: 13,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   filterActiveText: {
     color: '#FFFFFF',
@@ -260,6 +265,7 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 13,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   grid: {
     paddingBottom: 20,
@@ -269,5 +275,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
     fontSize: 14,
+    fontFamily: Fonts.body,
   },
 });

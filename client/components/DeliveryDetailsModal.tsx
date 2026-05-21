@@ -108,11 +108,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 13,
     marginTop: 4,
+    fontFamily: Fonts.body,
   },
   closeButton: {
     color: '#FFFFFF',
     fontSize: 22,
     paddingLeft: 12,
+    fontFamily: Fonts.body,
   },
   body: {
     padding: 16,
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#222126',
     marginBottom: 6,
+    fontFamily: Fonts.body,
   },
   detailsLabel: {
     fontSize: 14,
@@ -128,6 +131,7 @@ const styles = StyleSheet.create({
     color: '#222126',
     marginTop: 12,
     marginBottom: 8,
+    fontFamily: Fonts.body,
   },
   productRow: {
     flexDirection: 'row',
@@ -138,17 +142,20 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   productQty: {
     fontSize: 14,
     color: '#222126',
     marginHorizontal: 8,
+    fontFamily: Fonts.body,
   },
   productPrice: {
     fontSize: 14,
     color: '#222126',
     minWidth: 60,
     textAlign: 'right',
+    fontFamily: Fonts.body,
   },
   divider: {
     height: 1,
@@ -162,5 +169,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#222126',
+    fontFamily: Fonts.body,
   },
 });
