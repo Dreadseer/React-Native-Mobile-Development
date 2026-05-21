@@ -17,15 +17,16 @@ public class ApiCreateOrderDTO {
 
     private List<ProductItem> products;
 
-    @JsonProperty("send_email")
+    @JsonProperty("sendEmail")
     private boolean sendEmail = false;
 
-    @JsonProperty("send_sms")
+    @JsonProperty("sendSMS")
     private boolean sendSms = false;
 
     @Getter
     @Setter
     public static class ProductItem {
+        @JsonProperty("product_id")
         private int id;
         private int quantity;
     }

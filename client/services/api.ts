@@ -80,7 +80,7 @@ export async function getRestaurantProducts(id: string, token: string) {
   return json.data.map((p: any) => ({ ...p, price: p.cost }));
 }
 
-type OrderProduct = { id: number; quantity: number };
+type OrderProduct = { product_id: number; quantity: number };
 
 type OrderPayload = {
   customer_id: number;
