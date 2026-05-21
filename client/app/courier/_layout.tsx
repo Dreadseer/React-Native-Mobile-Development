@@ -2,7 +2,7 @@
 import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTruck, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faClockRotateLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import Header from '../../components/Header';
 
 export default function CourierLayout() {
@@ -17,12 +17,13 @@ export default function CourierLayout() {
         tabBarInactiveTintColor: '#FFFFFF',
       }}
     >
+      
       <Tabs.Screen
-        name="deliveries"
+        name="deliveries/index"
         options={{
           title: 'Deliveries',
           tabBarIcon: ({ color }) => (
-            <FontAwesomeIcon icon={faTruck} color={color} size={20} />
+            <FontAwesomeIcon icon={faClockRotateLeft} color={color} size={20} />
           ),
         }}
       />

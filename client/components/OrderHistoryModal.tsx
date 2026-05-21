@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { Fonts } from '../constants/fonts';
 
 type OrderProduct = {
   product_name: string;
@@ -61,7 +62,7 @@ export default function OrderHistoryModal({ visible, onClose, order }: Props) {
             <Text style={styles.metaText}>Courier: {order.courier_name ?? 'Not assigned'}</Text>
           </View>
 
-          <ScrollView contentContainerStyle={styles.body}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
             {/* Product line items */}
             {order.products.map((p) => (
               <View key={p.product_id} style={styles.productRow}>
@@ -113,16 +114,19 @@ const styles = StyleSheet.create({
     color: '#DA583B',
     fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: Fonts.heading,
   },
   closeButton: {
     color: '#FFFFFF',
     fontSize: 22,
     paddingLeft: 12,
+    fontFamily: Fonts.body,
   },
   metaText: {
     fontSize: 13,
     color: '#FFFFFF',
     marginTop: 3,
+    fontFamily: Fonts.body,
   },
   body: {
     padding: 16,
@@ -136,15 +140,18 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   productQty: {
     fontSize: 14,
     color: '#222126',
     marginHorizontal: 8,
+    fontFamily: Fonts.body,
   },
   productPrice: {
     fontSize: 14,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   divider: {
     height: 1,
@@ -158,5 +165,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#222126',
+    fontFamily: Fonts.body,
   },
 });
