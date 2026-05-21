@@ -139,7 +139,7 @@ export default function CourierDeliveriesScreen() {
     <View style={styles.screen}>
       <Text style={styles.heading}>MY DELIVERIES</Text>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
         {/* Table header */}
         <View style={styles.tableHeader}>
           <Text style={[styles.headerCell, styles.colId]}>ORDER ID</Text>
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     padding: 24,
+    fontFamily: Fonts.body,
   },
   heading: {
     fontFamily: Fonts.heading,
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
   },
   headerCell: {
     color: '#FFFFFF',
-    fontFamily: Fonts.heading,
+    fontFamily: Fonts.subheading,
     fontSize: 12,
   },
   tableRow: {
@@ -229,6 +230,7 @@ const styles = StyleSheet.create({
   cell: {
     fontSize: 13,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   colId: {
     width: 60,
@@ -256,5 +258,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
 });

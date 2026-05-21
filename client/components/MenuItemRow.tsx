@@ -1,5 +1,6 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { getRestaurantImage } from '../constants/restaurantImages';
+import { Fonts } from '../constants/fonts';
 
 type Product = {
   id: number;
@@ -72,15 +73,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222126',
     marginBottom: 2,
+    fontFamily: Fonts.body,
   },
   price: {
     fontSize: 13,
     color: '#851919',
     marginBottom: 4,
+    fontFamily: Fonts.body,
   },
   description: {
     fontSize: 12,
     color: '#888',
+    fontFamily: Fonts.body,
   },
   stepper: {
     flexDirection: 'row',
@@ -104,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 22,
+    fontFamily: Fonts.body,
   },
   quantity: {
     fontSize: 16,
@@ -111,5 +116,6 @@ const styles = StyleSheet.create({
     color: '#222126',
     minWidth: 24,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
 });

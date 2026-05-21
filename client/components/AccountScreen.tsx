@@ -87,7 +87,7 @@ export default function AccountScreen({ type, userId, token }: Props) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
       <Text style={styles.heading}>MY ACCOUNT</Text>
       <Text style={styles.subheading}>Logged In As: {label}</Text>
 
@@ -161,12 +161,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
     marginBottom: 28,
+    fontFamily: Fonts.body,
   },
   label: {
     fontSize: 14,
     fontWeight: '600',
     color: '#222126',
     marginBottom: 6,
+    fontFamily: Fonts.body,
   },
   input: {
     borderWidth: 1,
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#222126',
     marginBottom: 6,
+    fontFamily: Fonts.body,
   },
   inputReadOnly: {
     backgroundColor: '#F0F0F0',
@@ -186,6 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#888',
     marginBottom: 20,
+    fontFamily: Fonts.body,
   },
   button: {
     backgroundColor: '#DA583B',
@@ -201,17 +205,20 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 15,
+    fontFamily: Fonts.body,
   },
   successText: {
     color: '#609475',
     fontSize: 13,
     textAlign: 'center',
     marginTop: 12,
+    fontFamily: Fonts.body,
   },
   errorText: {
     color: '#DA583B',
     fontSize: 13,
     textAlign: 'center',
     marginTop: 12,
+    fontFamily: Fonts.body,
   },
 });

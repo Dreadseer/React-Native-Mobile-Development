@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   cardLabel: {
-    fontFamily: Fonts.heading,
+    fontFamily: Fonts.body,
     fontSize: 18,
     color: '#222126',
     marginTop: 12,

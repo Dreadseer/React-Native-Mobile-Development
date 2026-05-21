@@ -3,12 +3,14 @@ import {
   Modal,
   View,
   Text,
+  ScrollView,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleCheck, faCircleXmark, faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { createOrder } from '../services/api';
+import { Fonts } from '../constants/fonts';
 
 type Product = {
   id: number;
@@ -98,7 +100,7 @@ export default function OrderConfirmationModal({
           </View>
 
           {/* Order summary — always visible */}
-          <View style={styles.body}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
             <Text style={styles.summaryHeading}>Order Summary</Text>
 
             {orderedItems.map((product) => (
@@ -186,7 +188,7 @@ export default function OrderConfirmationModal({
                 </Text>
               </TouchableOpacity>
             )}
-          </View>
+          </ScrollView>
 
         </View>
       </View>
@@ -219,12 +221,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: Fonts.heading,
   },
   closeButton: {
     color: '#FFFFFF',
     fontSize: 24,
     lineHeight: 24,
     paddingHorizontal: 4,
+    fontFamily: Fonts.body,
   },
   closeButtonDisabled: {
     opacity: 0.3,
@@ -237,6 +241,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222126',
     marginBottom: 12,
+    fontFamily: Fonts.body,
   },
   row: {
     flexDirection: 'row',
@@ -247,6 +252,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 13,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   rowQty: {
     fontSize: 13,
@@ -254,12 +260,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     minWidth: 28,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   rowPrice: {
     fontSize: 13,
     color: '#222126',
     minWidth: 60,
     textAlign: 'right',
+    fontFamily: Fonts.body,
   },
   divider: {
     height: 1,
@@ -277,11 +285,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   totalAmount: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   statusContainer: {
     alignItems: 'center',
@@ -293,12 +303,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '600',
+    fontFamily: Fonts.body,
   },
   failureText: {
     color: '#851919',
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '600',
+    fontFamily: Fonts.body,
   },
   confirmButton: {
     backgroundColor: '#DA583B',
@@ -313,6 +325,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 14,
+    fontFamily: Fonts.body,
   },
   notificationSection: {
     marginTop: 12,
@@ -323,6 +336,7 @@ const styles = StyleSheet.create({
     color: '#222126',
     textAlign: 'center',
     marginBottom: 12,
+    fontFamily: Fonts.body,
   },
   checkboxRow: {
     flexDirection: 'row',
@@ -336,5 +350,6 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 14,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
 });

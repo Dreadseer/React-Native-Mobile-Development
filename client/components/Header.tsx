@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { Fonts } from '../constants/fonts';
 
 export default function Header() {
   const insets = useSafeAreaInsets();
@@ -46,5 +47,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 13,
+    fontFamily: Fonts.body,
   },
 });
