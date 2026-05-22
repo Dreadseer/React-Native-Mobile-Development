@@ -13,9 +13,207 @@
       "key": "token",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "customer_id",
+      "value": "24",
+      "type": "string"
+    },
+    {
+      "key": "courier_id",
+      "value": "23",
+      "type": "string"
+    },
+    {
+      "key": "order_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "restaurant_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "product_id",
+      "value": "1",
+      "type": "string"
     }
   ],
   "item": [
+    {
+      "name": "Module 14",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/auth", "host": ["{{base_url}}"], "path": ["api", "auth"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Restaurants",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                { "key": "rating", "value": "", "disabled": true },
+                { "key": "price_range", "value": "", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Restaurant by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/{{restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "{{restaurant_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Menu Items",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/products?restaurant={{restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products"],
+              "query": [{ "key": "restaurant", "value": "{{restaurant_id}}" }]
+            }
+          }
+        },
+        {
+          "name": "Get Customer Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/orders?type=customer&id={{customer_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"],
+              "query": [
+                { "key": "type", "value": "customer" },
+                { "key": "id", "value": "{{customer_id}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api", "orders"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": {{customer_id}},\n  \"restaurant_id\": {{restaurant_id}},\n  \"products\": [\n    { \"product_id\": {{product_id}}, \"quantity\": 1 }\n  ],\n  \"sendSMS\": false,\n  \"sendEmail\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Pending Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/orders/pending",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", "pending"]
+            }
+          }
+        },
+        {
+          "name": "Get Courier Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/orders?type=courier&id={{courier_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"],
+              "query": [
+                { "key": "type", "value": "courier" },
+                { "key": "id", "value": "{{courier_id}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Advance Order Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/order/{{order_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "order", "{{order_id}}", "status"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in progress\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Account",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/account/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "account", "{{user_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/account/{{user_id}}?type=customer",
+              "host": ["{{base_url}}"],
+              "path": ["api", "account", "{{user_id}}"],
+              "query": [{ "key": "type", "value": "customer" }]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemail@example.com\",\n  \"phone\": \"5551234567\"\n}"
+            }
+          }
+        }
+      ]
+    },
     {
       "name": "Auth",
       "item": [
@@ -233,7 +431,10 @@
               { "key": "Content-Type", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api", "orders"] },
-            "body": { "mode": "raw", "raw": "{\n  \"customer_id\": 1,\n  \"restaurant_id\": 1,\n  \"products\": [\n    { \"id\": 1, \"quantity\": 1 }\n  ]\n}" }
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": 1,\n  \"restaurant_id\": 1,\n  \"products\": [\n    { \"product_id\": 1, \"quantity\": 1 }\n  ],\n  \"sendSMS\": false,\n  \"sendEmail\": false\n}"
+            }
           }
         },
         {
@@ -289,7 +490,7 @@
               { "key": "Content-Type", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/order/1/status", "host": ["{{base_url}}"], "path": ["api", "order", "1", "status"] },
-            "body": { "mode": "raw", "raw": "{\n  \"order_status_id\": 1\n}" }
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"in progress\"\n}" }
           }
         }
       ]
@@ -579,7 +780,10 @@
               "path": ["api", "account", "1"],
               "query": [{ "key": "type", "value": "customer" }]
             },
-            "body": { "mode": "raw", "raw": "{}" }
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemail@example.com\",\n  \"phone\": \"5551234567\"\n}"
+            }
           }
         }
       ]
