@@ -115,7 +115,7 @@ public class NotificationService {
                 + "    \"order_total_cost\": \"" + totalCost + "\""
                 + "  },"
                 + "  \"transport\": [{"
-                + "    \"type\": \"SMTP\","
+                + "    \"type\": \"RocketEmail\","
                 + "    \"recipients\": {"
                 + "      \"to\": [{"
                 + "        \"name\": \"" + customerName + "\","
