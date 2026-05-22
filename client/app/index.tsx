@@ -30,10 +30,8 @@ export default function LoginScreen() {
     try {
       const data = await loginCustomer(email, password);
 
-      // AUTH RESPONSE shape (confirmed from console log):
-      // { accessToken, success, user_id, customer_id, courier_id }
-      // Flat structure — no nested user/customer/courier objects.
-      // customer_id or courier_id being null means the user lacks that role.
+      // Auth response is flat: { accessToken, user_id, customer_id, courier_id }
+      // customer_id or courier_id being null means the user does not have that role.
       const hasCustomer = data.customer_id != null;
       const hasCourier = data.courier_id != null;
 
@@ -42,6 +40,7 @@ export default function LoginScreen() {
       await AsyncStorage.setItem('customer', JSON.stringify(hasCustomer ? { id: data.customer_id } : null));
       await AsyncStorage.setItem('courier', JSON.stringify(hasCourier ? { id: data.courier_id } : null));
 
+      // Route based on which roles the user has — both roles go to selection screen
       if (hasCustomer && hasCourier) {
         router.replace('/selection');
       } else if (hasCustomer) {

@@ -1,3 +1,4 @@
+// Central API service — all fetch calls go through here using the Ngrok tunnel URL
 const BASE_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
 export async function loginCustomer(email: string, password: string) {
@@ -12,7 +13,6 @@ export async function loginCustomer(email: string, password: string) {
   }
 
   const data = await response.json();
-  console.log('=== AUTH RESPONSE ===', JSON.stringify(data, null, 2));
   return data;
 }
 
@@ -59,7 +59,6 @@ export async function getRestaurant(id: string, token: string) {
 // Maps API field 'cost' → 'price' so components don't need to know the API name.
 export async function getRestaurantProducts(id: string, token: string) {
   const url = `${BASE_URL}/api/products?restaurant=${id}`;
-  console.log('Fetching menu from:', url);
 
   const response = await fetch(url, {
     method: 'GET',
@@ -74,7 +73,6 @@ export async function getRestaurantProducts(id: string, token: string) {
   }
 
   const json = await response.json();
-  console.log('Menu API response:', JSON.stringify(json, null, 2));
 
   // API returns 'cost' — map to 'price' to match component expectations
   return json.data.map((p: any) => ({ ...p, price: p.cost }));
@@ -86,6 +84,8 @@ type OrderPayload = {
   customer_id: number;
   restaurant_id: number;
   products: OrderProduct[];
+  sendSMS: boolean;
+  sendEmail: boolean;
 };
 
 export async function getCustomerOrders(customerId: number, token: string) {
@@ -120,23 +120,6 @@ export async function createOrder(payload: OrderPayload, token: string) {
   }
 
   return response.json();
-}
-
-export async function getOrderStatuses(token: string) {
-  const response = await fetch(`${BASE_URL}/api/order-statuses`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch order statuses');
-  }
-
-  const json = await response.json();
-  return json.data;
 }
 
 export async function getPendingOrders(token: string) {
@@ -206,7 +189,6 @@ export async function getAccountDetails(userId: number, token: string) {
   }
 
   const json = await response.json();
-  console.log('=== ACCOUNT RESPONSE ===', JSON.stringify(json, null, 2));
   return json.data;
 }
 

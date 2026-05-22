@@ -70,15 +70,17 @@ export default function CourierDeliveriesScreen() {
     const courierId: number = courier?.id;
 
     try {
+      // Fetch pending orders (visible to all couriers) and this courier's own orders in parallel
       const [pendingOrders, courierOrders] = await Promise.all([
         getPendingOrders(token),
         getCourierOrders(courierId, token),
       ]);
 
-      // API returns lowercase status — normalize to uppercase for consistent comparisons
+      // Normalize status strings to uppercase for consistent comparison and display
       const normalize = (list: any[]): Order[] =>
         list.map(o => ({ ...o, status: (o.status as string).toUpperCase() }));
 
+      // Merge and deduplicate — exclude PENDING from courier orders to avoid showing them twice
       const merged: Order[] = [
         ...normalize(pendingOrders),
         ...normalize(courierOrders).filter(o => o.status !== 'PENDING'),
@@ -105,7 +107,7 @@ export default function CourierDeliveriesScreen() {
         prev.map(o => (o.id === order.id ? { ...o, status: next } : o))
       );
     } catch (e) {
-      console.log('=== UPDATE STATUS ERROR ===', e);
+      console.error('Failed to advance order status:', e);
     }
   };
 

@@ -98,6 +98,7 @@ export default function RestaurantMenuScreen() {
     });
   };
 
+  // Create Order button is enabled only when at least one item has quantity > 0
   const allZero = Object.values(quantities).every((q) => q === 0);
 
   if (isLoading) {
