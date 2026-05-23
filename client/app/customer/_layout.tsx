@@ -2,7 +2,7 @@
 import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUtensils, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faClockRotateLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import Header from '../../components/Header';
 
 export default function CustomerLayout() {
@@ -32,6 +32,15 @@ export default function CustomerLayout() {
             title: 'Order History',
             tabBarIcon: ({ color }) => (
               <FontAwesomeIcon icon={faClockRotateLeft} color={color} size={20} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="account/index"
+          options={{
+            title: 'Account',
+            tabBarIcon: ({ color }) => (
+              <FontAwesomeIcon icon={faUser} color={color} size={20} />
             ),
           }}
         />

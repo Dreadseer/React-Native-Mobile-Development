@@ -1,29 +1,21 @@
-import {
-  Modal,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { Modal, View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Fonts } from '../constants/fonts';
 
+// Field names confirmed from API console log
 type OrderProduct = {
   product_name: string;
   quantity: number;
   unit_cost: number;
-  total_cost: number;
   product_id: number;
 };
 
 type Order = {
   id: number;
-  restaurant_name: string;
   status: string;
+  customer_address: string;
+  restaurant_name: string;
   created_on: string;
-  courier_name: string | null;
   products: OrderProduct[];
-  total_cost: number;
 };
 
 type Props = {
@@ -32,14 +24,10 @@ type Props = {
   order: Order | null;
 };
 
-export default function OrderHistoryModal({ visible, onClose, order }: Props) {
+export default function DeliveryDetailsModal({ visible, onClose, order }: Props) {
   if (!order) return null;
 
-  const orderTotal = order.products.reduce(
-    (sum, p) => sum + p.unit_cost * p.quantity,
-    0
-  );
-
+  const total = order.products.reduce((sum, p) => sum + p.unit_cost * p.quantity, 0);
   const formattedDate = new Date(order.created_on).toLocaleDateString();
 
   return (
@@ -50,32 +38,35 @@ export default function OrderHistoryModal({ visible, onClose, order }: Props) {
           {/* Header */}
           <View style={styles.header}>
             <View style={styles.headerRow}>
-              <Text style={styles.restaurantName} numberOfLines={1}>
-                {order.restaurant_name}
-              </Text>
+              <View>
+                <Text style={styles.headerTitle}>DELIVERY DETAILS</Text>
+                <Text style={styles.headerStatus}>Status: {order.status}</Text>
+              </View>
               <TouchableOpacity onPress={onClose}>
                 <Text style={styles.closeButton}>×</Text>
               </TouchableOpacity>
             </View>
-            <Text style={styles.metaText}>Order Date: {formattedDate}</Text>
-            <Text style={styles.metaText}>Status: {order.status}</Text>
-            <Text style={styles.metaText}>Courier: {order.courier_name ?? 'Not assigned'}</Text>
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
-            {/* Product line items */}
-            {order.products.map((p) => (
-              <View key={p.product_id} style={styles.productRow}>
+          <ScrollView contentContainerStyle={styles.body}>
+            <Text style={styles.bodyText}>Delivery Address: {order.customer_address}</Text>
+            <Text style={styles.bodyText}>Restaurant: {order.restaurant_name}</Text>
+            <Text style={styles.bodyText}>Order Date: {formattedDate}</Text>
+
+            <Text style={styles.detailsLabel}>Order Details:</Text>
+
+            {order.products.map((p, index) => (
+              <View key={index} style={styles.productRow}>
                 <Text style={styles.productName} numberOfLines={1}>{p.product_name}</Text>
                 <Text style={styles.productQty}>x{p.quantity}</Text>
                 <Text style={styles.productPrice}>$ {p.unit_cost.toFixed(2)}</Text>
               </View>
             ))}
 
-            {/* Divider + Total */}
             <View style={styles.divider} />
+
             <View style={styles.totalRow}>
-              <Text style={styles.totalLabel}>TOTAL: $ {orderTotal.toFixed(2)}</Text>
+              <Text style={styles.totalLabel}>TOTAL: $ {total.toFixed(2)}</Text>
             </View>
           </ScrollView>
 
@@ -95,7 +86,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
-    marginHorizontal: 24,
     overflow: 'hidden',
     maxHeight: '80%',
     width: '88%',
@@ -107,14 +97,18 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
-  restaurantName: {
-    flex: 1,
-    color: '#DA583B',
-    fontWeight: 'bold',
-    fontSize: 18,
+  headerTitle: {
     fontFamily: Fonts.heading,
+    color: '#DA583B',
+    fontSize: 18,
+  },
+  headerStatus: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    marginTop: 4,
+    fontFamily: Fonts.body,
   },
   closeButton: {
     color: '#FFFFFF',
@@ -122,19 +116,27 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     fontFamily: Fonts.body,
   },
-  metaText: {
-    fontSize: 13,
-    color: '#FFFFFF',
-    marginTop: 3,
-    fontFamily: Fonts.body,
-  },
   body: {
     padding: 16,
+  },
+  bodyText: {
+    fontSize: 14,
+    color: '#222126',
+    marginBottom: 6,
+    fontFamily: Fonts.body,
+  },
+  detailsLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#222126',
+    marginTop: 12,
+    marginBottom: 8,
+    fontFamily: Fonts.body,
   },
   productRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   productName: {
     flex: 1,
@@ -151,6 +153,8 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 14,
     color: '#222126',
+    minWidth: 60,
+    textAlign: 'right',
     fontFamily: Fonts.body,
   },
   divider: {

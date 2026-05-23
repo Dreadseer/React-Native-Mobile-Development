@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLocalSearchParams, router } from 'expo-router';
+import { Fonts } from '../../../constants/fonts';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { getRestaurant, getRestaurantProducts } from '../../../services/api';
@@ -97,6 +98,7 @@ export default function RestaurantMenuScreen() {
     });
   };
 
+  // Create Order button is enabled only when at least one item has quantity > 0
   const allZero = Object.values(quantities).every((q) => q === 0);
 
   if (isLoading) {
@@ -142,7 +144,7 @@ export default function RestaurantMenuScreen() {
 
       <Text style={styles.screenHeading}>RESTAURANT MENU</Text>
 
-      <ScrollView contentContainerStyle={styles.menuList}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.menuList}>
         {products.map((product) => (
           <MenuItemRow
             key={product.id}
@@ -183,6 +185,7 @@ const styles = StyleSheet.create({
     color: '#DA583B',
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   screenHeading: {
     color: '#222126',
@@ -190,6 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     letterSpacing: 1,
     marginBottom: 12,
+    fontFamily: Fonts.heading,
   },
   restaurantHeader: {
     flexDirection: 'row',
@@ -206,11 +210,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 4,
+    fontFamily: Fonts.body,
   },
   restaurantPrice: {
     color: '#851919',
     fontSize: 14,
     marginBottom: 4,
+    fontFamily: Fonts.body,
   },
   stars: {
     flexDirection: 'row',
@@ -230,6 +236,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 13,
+    fontFamily: Fonts.body,
   },
   menuList: {
     paddingBottom: 20,

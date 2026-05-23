@@ -3,12 +3,14 @@ import {
   Modal,
   View,
   Text,
+  ScrollView,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircleXmark, faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { createOrder } from '../services/api';
+import { Fonts } from '../constants/fonts';
 
 type Product = {
   id: number;
@@ -38,6 +40,8 @@ export default function OrderConfirmationModal({
   restaurantId,
 }: Props) {
   const [orderStatus, setOrderStatus] = useState<OrderStatus>('idle');
+  const [sendEmail, setSendEmail] = useState(false);
+  const [sendSMS, setSendSMS] = useState(false);
 
   // Only items the user actually ordered
   const orderedItems = products.filter((p) => (quantities[p.id] ?? 0) > 0);
@@ -49,6 +53,8 @@ export default function OrderConfirmationModal({
   const handleClose = () => {
     if (orderStatus === 'processing') return;
     setOrderStatus('idle');
+    setSendEmail(false);
+    setSendSMS(false);
     onClose();
   };
 
@@ -61,9 +67,11 @@ export default function OrderConfirmationModal({
       products: Object.entries(quantities)
         .filter(([, qty]) => qty > 0)
         .map(([productId, qty]) => ({
-          id: parseInt(productId),
+          product_id: parseInt(productId),
           quantity: qty,
         })),
+      sendSMS,
+      sendEmail,
     };
 
     try {
@@ -82,21 +90,17 @@ export default function OrderConfirmationModal({
           {/* Header */}
           <View style={styles.header}>
             <Text style={styles.headerTitle}>Order Confirmation</Text>
-            {orderStatus !== 'success' && (
-              <TouchableOpacity
-                onPress={handleClose}
-                disabled={orderStatus === 'processing'}
-              >
-                <Text style={[
-                  styles.closeButton,
-                  orderStatus === 'processing' && styles.closeButtonDisabled,
-                ]}>×</Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              onPress={handleClose}
+              disabled={orderStatus === 'processing'}
+              style={{ opacity: orderStatus === 'processing' ? 0.4 : 1 }}
+            >
+              <Text style={styles.closeButton}>×</Text>
+            </TouchableOpacity>
           </View>
 
           {/* Order summary — always visible */}
-          <View style={styles.body}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
             <Text style={styles.summaryHeading}>Order Summary</Text>
 
             {orderedItems.map((product) => (
@@ -115,6 +119,40 @@ export default function OrderConfirmationModal({
               <Text style={styles.totalLabel}>TOTAL:</Text>
               <Text style={styles.totalAmount}>$ {orderTotal.toFixed(2)}</Text>
             </View>
+
+            {/* Notification opt-in — idle state only */}
+            {orderStatus === 'idle' && (
+              <View style={styles.notificationSection}>
+                <Text style={styles.notificationText}>
+                  Would you like to receive your order confirmation by email and/or text?
+                </Text>
+                <View style={styles.checkboxRow}>
+                  <TouchableOpacity
+                    style={styles.checkbox}
+                    onPress={() => setSendEmail(prev => !prev)}
+                  >
+                    <FontAwesomeIcon
+                      icon={sendEmail ? faSquareCheck : faSquare}
+                      size={20}
+                      color={sendEmail ? '#DA583B' : '#222126'}
+                    />
+                    <Text style={styles.checkboxLabel}>By Email</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.checkbox}
+                    onPress={() => setSendSMS(prev => !prev)}
+                  >
+                    <FontAwesomeIcon
+                      icon={sendSMS ? faSquareCheck : faSquare}
+                      size={20}
+                      color={sendSMS ? '#DA583B' : '#222126'}
+                    />
+                    <Text style={styles.checkboxLabel}>By Phone</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
 
             {/* State-based UI */}
             {orderStatus === 'success' && (
@@ -150,7 +188,7 @@ export default function OrderConfirmationModal({
                 </Text>
               </TouchableOpacity>
             )}
-          </View>
+          </ScrollView>
 
         </View>
       </View>
@@ -183,12 +221,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: Fonts.heading,
   },
   closeButton: {
     color: '#FFFFFF',
     fontSize: 24,
     lineHeight: 24,
     paddingHorizontal: 4,
+    fontFamily: Fonts.body,
   },
   closeButtonDisabled: {
     opacity: 0.3,
@@ -201,6 +241,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222126',
     marginBottom: 12,
+    fontFamily: Fonts.body,
   },
   row: {
     flexDirection: 'row',
@@ -211,6 +252,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 13,
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   rowQty: {
     fontSize: 13,
@@ -218,12 +260,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     minWidth: 28,
     textAlign: 'center',
+    fontFamily: Fonts.body,
   },
   rowPrice: {
     fontSize: 13,
     color: '#222126',
     minWidth: 60,
     textAlign: 'right',
+    fontFamily: Fonts.body,
   },
   divider: {
     height: 1,
@@ -241,11 +285,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   totalAmount: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#222126',
+    fontFamily: Fonts.body,
   },
   statusContainer: {
     alignItems: 'center',
@@ -257,12 +303,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '600',
+    fontFamily: Fonts.body,
   },
   failureText: {
     color: '#851919',
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '600',
+    fontFamily: Fonts.body,
   },
   confirmButton: {
     backgroundColor: '#DA583B',
@@ -277,5 +325,31 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 14,
+    fontFamily: Fonts.body,
+  },
+  notificationSection: {
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  notificationText: {
+    fontSize: 13,
+    color: '#222126',
+    textAlign: 'center',
+    marginBottom: 12,
+    fontFamily: Fonts.body,
+  },
+  checkboxRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  checkbox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  checkboxLabel: {
+    fontSize: 14,
+    color: '#222126',
+    fontFamily: Fonts.body,
   },
 });

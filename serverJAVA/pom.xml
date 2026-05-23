@@ -89,6 +89,11 @@
 			<artifactId>twilio</artifactId>
 			<version>11.3.5</version>
 		</dependency>
+		<dependency>
+			<groupId>com.vonage</groupId>
+			<artifactId>server-sdk</artifactId>
+			<version>9.3.1</version>
+		</dependency>
     </dependencies>
 
 	<build>
