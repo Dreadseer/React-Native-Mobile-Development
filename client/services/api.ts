@@ -1,10 +1,17 @@
 // Central API service — all fetch calls go through here using the Ngrok tunnel URL
 const BASE_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
+// Ngrok's free tier shows a browser interstitial unless this header is present.
+// Safe to send on all platforms — React Native ignores unknown headers.
+const BASE_HEADERS = {
+  'Content-Type': 'application/json',
+  'ngrok-skip-browser-warning': 'true',
+};
+
 export async function loginCustomer(email: string, password: string) {
   const response = await fetch(`${BASE_URL}/api/auth`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...BASE_HEADERS },
     body: JSON.stringify({ email, password }),
   });
 
@@ -22,7 +29,7 @@ export async function getRestaurants(token: string) {
   const response = await fetch(`${BASE_URL}/api/restaurants`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -41,7 +48,7 @@ export async function getRestaurant(id: string, token: string) {
   const response = await fetch(`${BASE_URL}/api/restaurants/${id}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -63,7 +70,7 @@ export async function getRestaurantProducts(id: string, token: string) {
   const response = await fetch(url, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -92,7 +99,7 @@ export async function getCustomerOrders(customerId: number, token: string) {
   const response = await fetch(`${BASE_URL}/api/orders?type=customer&id=${customerId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -109,7 +116,7 @@ export async function createOrder(payload: OrderPayload, token: string) {
   const response = await fetch(`${BASE_URL}/api/orders`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(payload),
@@ -126,7 +133,7 @@ export async function getPendingOrders(token: string) {
   const response = await fetch(`${BASE_URL}/api/orders/pending`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -143,7 +150,7 @@ export async function getCourierOrders(courierId: number, token: string) {
   const response = await fetch(`${BASE_URL}/api/orders?type=courier&id=${courierId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -160,7 +167,7 @@ export async function updateOrderStatus(orderId: number, statusName: string, tok
   const response = await fetch(`${BASE_URL}/api/order/${orderId}/status`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ status: statusName }),
@@ -179,7 +186,7 @@ export async function getAccountDetails(userId: number, token: string) {
   const response = await fetch(`${BASE_URL}/api/account/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
   });
@@ -202,7 +209,7 @@ export async function updateAccountDetails(
   const response = await fetch(`${BASE_URL}/api/account/${userId}?type=${type}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      ...BASE_HEADERS,
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email, phone }),
